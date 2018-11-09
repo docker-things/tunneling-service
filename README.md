@@ -6,24 +6,30 @@ Docker image based on Alpine with a SSH service usable for tunneling. It's sendi
 
 --------------------------------------------------------------------------------
 
-### Description
+### Purpose
 
-The purpose is to use it as a single entry point in a LAN network and then connect through its tunnel to whatever you need. This means that it should be the only SSH port forwarded through the LAN router.
+This is meant to be used as a single entry point in a LAN network. Any other connections should be done through it.
 
-The built image has 7.67MB so it's pretty lightweight.
+This means that it should be the only SSH port forwarded through the LAN router.
 
 --------------------------------------------------------------------------------
 
 ### Security
 
- - an alert is sent to a Slack Incoming WebHook on connect/disconnect
- - the SSH service doesn't provide a TTY
- - any TTY attempt will automatically exit
- - the root password is randomly generated @ build time
- - the `su` binary is removed
- - the username, password & slack endpoint are entered manually @ build time
+ - An alert is sent to a Slack Incoming WebHook on connect/disconnect
+ - The SSH service doesn't provide a TTY
+ - Any TTY attempt will automatically exit
+ - The root password is randomly generated @ build time
+ - The `su` binary is removed
+ - The `username`, `password` & `slack endpoint` are entered manually @ build time
 
 You could obviously change the image to use a key instead of a password. That would be better but it's not my use case.
+
+--------------------------------------------------------------------------------
+
+### Size
+
+The built image has 7.67MB so it's pretty lightweight.
 
 --------------------------------------------------------------------------------
 
