@@ -74,7 +74,7 @@ bash docker.sh build
 
 ### Launch
 
-Launche the image:
+Launch the image:
 
 ```shell
 bash docker.sh launch
