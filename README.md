@@ -12,11 +12,14 @@ This is meant to be used as a single entry point in a LAN network. Any other con
 
 This means that it should be the only SSH port forwarded through the LAN router.
 
+Assuming someone gains access to this SSH server you'll be notified right away and be able to take quick action. Also, since it's a small docker image, your files won't be directly exposed to the attacker so he'll have a bit more work to do. That gives you time to intervene.
+
 --------------------------------------------------------------------------------
 
 ### Security
 
  - An alert is sent to a Slack Incoming WebHook on connect/disconnect
+ - Being a small docker image a hack won't directly expose your data
  - The SSH service doesn't provide a TTY
  - Any TTY attempt will automatically exit
  - The root password is randomly generated @ build time
