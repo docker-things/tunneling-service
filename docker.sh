@@ -42,6 +42,7 @@ function scriptBuild() {
     # Build the image
     showGreen "\n > Building image..."
     sudo docker build \
+        --build-arg SSH_HOSTNAME="$SSH_HOSTNAME" \
         --build-arg SSH_USERNAME="$SSH_USERNAME" \
         --build-arg SSH_PASSWORD="$SSH_PASSWORD" \
         --build-arg SLACK_ENDPOINT="$SLACK_ENDPOINT" \
@@ -87,7 +88,7 @@ function scriptBuild() {
 function scriptLaunch() {
     showGreen "\nLaunching $PROJECT_NAME..."
     sudo docker run \
-        -h "$HOSTNAME" \
+        -h "$SSH_HOSTNAME" \
         -p $SSH_PORT:22 \
         -it \
         --rm "$PROJECT_NAME"

@@ -4,7 +4,7 @@
 PROJECT_NAME="docker-tunneling-service"
 
 # The hostname of the created image
-HOSTNAME="my-tunneling-service"
+SSH_HOSTNAME="my-tunneling-service"
 
 # The port to which SSH will be mapped on the host machine
 SSH_PORT=4321

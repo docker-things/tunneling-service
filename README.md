@@ -1,6 +1,6 @@
 # Docker Tunneling Service
 
-Docker image based on Alpine with a SSH service usable for tunneling. It's sending an alert through Slack for every connect/disconnect event.
+Docker image based on Alpine with a SSH service usable for tunneling. It's sending an alert through Slack for every connect/disconnect event and it's using Two-Factor Authentication.
 
 ![screenshots.jpg](screenshots.jpg)
 
@@ -32,7 +32,7 @@ You could obviously change the image to use a key instead of a password. That wo
 
 ### Size
 
-The built image has 7.67MB so it's pretty lightweight.
+The built image has 7.72MB so it's pretty lightweight.
 
 --------------------------------------------------------------------------------
 
@@ -47,12 +47,12 @@ If you wish you can hardcode the username, password and endpoint but I don't rec
 PROJECT_NAME="docker-tunneling-service"
 
 # The hostname of the created image
-HOSTNAME="my-tunneling-service"
+SSH_HOSTNAME="entrypoint"
 
 # The port to which SSH will be mapped on the host machine
 SSH_PORT=4321
 
-# Make this available only when buliding
+# Require these only when buliding
 if [ "$1" == "build" ]; then
 
     # The user you'll use to login
@@ -78,6 +78,12 @@ This will require the username, password & slack endpoint and then it will build
 ```shell
 bash docker.sh build
 ```
+
+During build-time the Two-Factor Authentication details will be shown so you'l have to scroll back to see them. It shoud look like this:
+
+![screenshot-tfa.jpg](screenshot-tfa.jpg)
+
+The authentication code will be provided by [Google Authenticator](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2).
 
 --------------------------------------------------------------------------------
 
