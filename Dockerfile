@@ -62,9 +62,9 @@ RUN sed -ri 's/^#?Port\s+.*/Port 22/' /etc/ssh/sshd_config \
 RUN echo "$SSH_USERNAME" > /etc/ssh/sshd.allow \
  && echo 'auth            required        pam_listfile.so item=user sense=allow file=/etc/ssh/sshd.allow onerr=fail' >> /etc/pam.d/base-auth
 
-# PAM - LOCK ACCOUNTS FOR 10 MINUTES AFTER 2 FAILED LOGINS
-RUN echo 'account         required        pam_tally2.so' >> /etc/pam.d/base-account \
- && echo 'auth            required        pam_tally2.so   file=/var/log/tallylog deny=2 even_deny_root unlock_time=600' >> /etc/pam.d/base-auth
+## PAM - LOCK ACCOUNTS FOR 10 MINUTES AFTER 2 FAILED LOGINS
+#RUN echo 'account         required        pam_tally2.so' >> /etc/pam.d/base-account \
+# && echo 'auth            required        pam_tally2.so   file=/var/log/tallylog deny=2 even_deny_root unlock_time=600' >> /etc/pam.d/base-auth
 
 # SETUP TWO FACTOR AUTH
 RUN echo 'auth            required        pam_google_authenticator.so' >> /etc/pam.d/base-auth
