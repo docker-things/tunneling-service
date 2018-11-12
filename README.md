@@ -81,7 +81,7 @@ bash docker.sh build
 
 During build-time the Two-Factor Authentication details will be shown so you'l have to scroll back to see them. It shoud look like this:
 
-![screenshot-tfa.jpg](screenshot-tfa.jpg)
+![screenshot-tfa.png](screenshot-tfa.png)
 
 The authentication code will be provided by [Google Authenticator](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2).
 
