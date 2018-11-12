@@ -79,7 +79,7 @@ This will require the username, password & slack endpoint and then it will build
 bash docker.sh build
 ```
 
-During build-time the Two-Factor Authentication details will be shown so you'l have to scroll back to see them. It shoud look like this:
+During build-time the Two-Factor Authentication details will be shown so you'll have to scroll back to see them. It shoud look like this:
 
 ![screenshot-tfa.png](screenshot-tfa.png)
 
