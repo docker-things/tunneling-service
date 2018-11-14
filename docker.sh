@@ -88,6 +88,7 @@ function scriptBuild() {
 function scriptLaunch() {
     showGreen "\nLaunching $PROJECT_NAME..."
     sudo docker run \
+        --restart=always \
         -h "$SSH_HOSTNAME" \
         -p $SSH_PORT:22 \
         -it \
