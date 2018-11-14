@@ -1,6 +1,6 @@
 # Docker Tunneling Service
 
-Docker image based on Alpine with a SSH service usable for tunneling. It's sending an alert through Slack for every connect/disconnect event and it's using Two-Factor Authentication.
+Docker image with a SSH service usable for tunneling only. It has Two-Factor Auth and it's sending an alert through Slack for every connect/disconnect event.
 
 ![screenshots.jpg](screenshots.jpg)
 
