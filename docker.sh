@@ -92,7 +92,7 @@ function scriptLaunch() {
         -h "$SSH_HOSTNAME" \
         -p $SSH_PORT:22 \
         -it \
-        --rm "$PROJECT_NAME"
+        "$PROJECT_NAME"
     exit $?
 }
 
