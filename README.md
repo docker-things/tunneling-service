@@ -90,8 +90,11 @@ The authentication code will be provided by [Google Authenticator](https://play.
 ### Commands
 
 ```bash docker.sh launch``` Launch the image.
+
 ```bash docker.sh logs``` Show the SSH logs.
+
 ```bash docker.sh kill``` Kill the currently running docker image.
+
 ```bash docker.sh remove``` Remove the already built docker image. It will ask for confirmation.
 
 --------------------------------------------------------------------------------
