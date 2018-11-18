@@ -14,6 +14,7 @@ function scriptRun() {
     case "$1" in
     "build")     scriptBuild    ;;
     "launch")    scriptLaunch   ;;
+    "logs")      scriptLogs     ;;
     "kill")      scriptKill     ;;
     "remove")    scriptRemove   ;;
     *)           showUsage      ;;
@@ -22,7 +23,7 @@ function scriptRun() {
 
 # Show script usage
 function showUsage() {
-    showNormal "\nUsage: bash $0 [build|launch|kill|remove]\n"
+    showNormal "\nUsage: bash $0 [build|launch|logs|kill|remove]\n"
     exit 1
 }
 
@@ -88,6 +89,7 @@ function scriptBuild() {
 function scriptLaunch() {
     showGreen "\nLaunching $PROJECT_NAME..."
     sudo docker run \
+        -d \
         --restart=always \
         -h "$SSH_HOSTNAME" \
         -p $SSH_PORT:22 \
@@ -119,11 +121,30 @@ function scriptRemove() {
     exit 0
 }
 
+# Show image logs
+function scriptLogs() {
+    showGreen "\nShowing logs for $PROJECT_NAME:"
+    CONTAINER_ID="`sudo docker ps | grep "$PROJECT_NAME" | awk '{print $1}'`"
+    if [ "$CONTAINER_ID" == "" ]; then
+        showRed "\nCouldn't find container id! Image not running?\n"
+        exit 1
+    else
+        sudo docker logs "$CONTAINER_ID"
+        exit $?
+    fi
+}
+
 # Kill the running docker image
 function scriptKill() {
     showYellow "\nKill $PROJECT_NAME image..."
-    sudo docker kill "`sudo docker ps | grep "$PROJECT_NAME" | awk -F'/' '{print $5}' | awk '{print $2}'`"
-    exit $?
+    CONTAINER_ID="`sudo docker ps | grep "$PROJECT_NAME" | awk '{print $1}'`"
+    if [ "$CONTAINER_ID" == "" ]; then
+        showRed "\nCouldn't find container id! Image not running?\n"
+        exit 1
+    else
+        sudo docker kill "$CONTAINER_ID"
+        exit $?
+    fi
 }
 
 scriptRun "$1"
