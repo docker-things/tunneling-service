@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Command used to launch docker
+DOCKER_CMD="`which docker`"
+
+# Where to store the backups
+BACKUP_PATH="$HOME/.docker-things/backups"
+
 # The name of the docker image
 PROJECT_NAME="tunneling-service"
 
