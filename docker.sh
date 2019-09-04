@@ -325,7 +325,7 @@ function imageBuilt() {
 # Make the app runnable from the host system
 function scriptInstall() {
     showGreen "\nInstalling $PROJECT_NAME..."
-    safeProjectName="`echo "$PROJECT_NAME" | sed -e 's/[^a-zA-Z0-9\-]/_/g'`"
+    safeProjectName="`echo "$PROJECT_NAME" | awk -F':' '{print $1}' | sed -e 's/[^a-zA-Z0-9\-]/_/g'`"
     COMMAND="$(getStartCommand)"
 
     BIN_FILE="/usr/bin/$safeProjectName"
@@ -340,8 +340,8 @@ function scriptInstall() {
     sudo sh -c "
         echo \"[Desktop Entry]\" > $DESKTOP_FILE \
      && echo \"Encoding=UTF-8\" >> $DESKTOP_FILE \
-     && echo \"Name=$safeProjectName\" >> $DESKTOP_FILE \
-     && echo \"Comment=$safeProjectName\" >> $DESKTOP_FILE \
+     && echo \"Name=${safeProjectName^}\" >> $DESKTOP_FILE \
+     && echo \"Comment=${safeProjectName^}\" >> $DESKTOP_FILE \
      && echo \"Exec=$BIN_FILE\" >> $DESKTOP_FILE \
      && echo \"Terminal=false\" >> $DESKTOP_FILE \
      && echo \"Type=Application\" >> $DESKTOP_FILE \
