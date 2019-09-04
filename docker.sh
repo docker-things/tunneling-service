@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # WhereAmI function
-get_script_dir () {
+function get_script_dir() {
      SOURCE="${BASH_SOURCE[0]}"
      while [ -h "$SOURCE" ]; do
           DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
