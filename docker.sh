@@ -335,21 +335,24 @@ function scriptInstall() {
      && echo \"$COMMAND\" >> $BIN_FILE \
      "
     sudo chmod +x "$BIN_FILE"
-
-    DESKTOP_FILE="/usr/share/applications/$safeProjectName.desktop"
-    sudo sh -c "
-        echo \"[Desktop Entry]\" > $DESKTOP_FILE \
-     && echo \"Encoding=UTF-8\" >> $DESKTOP_FILE \
-     && echo \"Name=${safeProjectName^}\" >> $DESKTOP_FILE \
-     && echo \"Comment=${safeProjectName^}\" >> $DESKTOP_FILE \
-     && echo \"Exec=$BIN_FILE\" >> $DESKTOP_FILE \
-     && echo \"Terminal=false\" >> $DESKTOP_FILE \
-     && echo \"Type=Application\" >> $DESKTOP_FILE \
-     && echo \"Categories=GNOME;Application;Development;\" >> $DESKTOP_FILE \
-     && echo \"StartupNotify=true\" >> $DESKTOP_FILE \
-     "
-
     showGreen "\nInstalled @ $BIN_FILE"
+
+    if [ -f "`pwd`/icon.png" ]; then
+        DESKTOP_FILE="/usr/share/applications/$safeProjectName.desktop"
+        sudo sh -c "
+            echo \"[Desktop Entry]\" > $DESKTOP_FILE \
+         && echo \"Encoding=UTF-8\" >> $DESKTOP_FILE \
+         && echo \"Name=${safeProjectName^}\" >> $DESKTOP_FILE \
+         && echo \"Comment=${safeProjectName^}\" >> $DESKTOP_FILE \
+         && echo \"Icon=`pwd`/icon.png\" >> $DESKTOP_FILE \
+         && echo \"Exec=$BIN_FILE\" >> $DESKTOP_FILE \
+         && echo \"Terminal=false\" >> $DESKTOP_FILE \
+         && echo \"Type=Application\" >> $DESKTOP_FILE \
+         && echo \"Categories=GNOME;Application;Development;\" >> $DESKTOP_FILE \
+         && echo \"StartupNotify=true\" >> $DESKTOP_FILE \
+         "
+        showGreen "\nAdded menu entry @ $DESKTOP_FILE"
+    fi
 }
 
 # Actually do stuff
