@@ -6,6 +6,9 @@ DOCKER_CMD="`which docker`"
 # Where to store the backups
 BACKUP_PATH=""
 
+# Where to store the communication pipes
+FIFO_PATH="/tmp/docker-things/fifo"
+
 # The name of the docker image
 PROJECT_NAME="tunneling-service"
 
