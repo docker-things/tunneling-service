@@ -345,6 +345,8 @@ function scriptSetDefault() {
     safeProjectName="`echo "$PROJECT_NAME" | awk -F':' '{print $1}' | sed -e 's/[^a-zA-Z0-9\-]/_/g'`"
     if [ "$APP_GENERIC_NAME" == "Web Browser" ]; then
         xdg-settings set default-web-browser "${safeProjectName}.desktop"
+    elif [ "$APP_GENERIC_NAME" == "Mail Client" ]; then
+        xdg-settings set default-url-scheme-handler mailto "${safeProjectName}.desktop"
     else
         showYellow "[WARN] App of \"$APP_GENERIC_NAME\" type can't be set as default! Functionality not implemented!"
     fi
