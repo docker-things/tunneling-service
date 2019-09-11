@@ -354,6 +354,8 @@ function scriptSetDefault() {
         xdg-settings set default-web-browser "${safeProjectName}.desktop"
     elif [ "$APP_GENERIC_NAME" == "Mail Client" ]; then
         xdg-settings set default-url-scheme-handler mailto "${safeProjectName}.desktop"
+    elif [ "$APP_GENERIC_NAME" == "Text Editor" ]; then
+        xdg-mime default "${safeProjectName}.desktop" text/plain
     else
         showYellow "[WARN] App of \"$APP_GENERIC_NAME\" type can't be set as default! Functionality not implemented!"
     fi
