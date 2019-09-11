@@ -342,31 +342,43 @@ function imageBuilt() {
 # Make the app runnable from the host system
 function scriptInstall() {
     showGreen "\nInstalling $PROJECT_NAME..."
+
+    buildRuntimeVolumeDirs
+
     safeProjectName="`echo "$PROJECT_NAME" | awk -F':' '{print $1}' | sed -e 's/[^a-zA-Z0-9\-]/_/g'`"
     COMMAND="bash `pwd`/docker.sh start"
 
     BIN_FILE="/usr/bin/$safeProjectName"
     sudo sh -c "
         echo '#!/bin/bash' > $BIN_FILE \
-     && echo \"$COMMAND\" >> $BIN_FILE \
+     && echo \"$COMMAND \\\$@\" >> $BIN_FILE \
      "
     sudo chmod +x "$BIN_FILE"
     showGreen "\nInstalled @ $BIN_FILE"
 
     if [ -f "`pwd`/icon.png" ]; then
+        # Default app categories
+        APP_CATEGORIES="${APP_CATEGORIES:=GNOME;GTK;Utility;}"
+
+        # Where to add the entry
         DESKTOP_FILE="/usr/share/applications/$safeProjectName.desktop"
+
+        # Add
         sudo sh -c "
             echo \"[Desktop Entry]\" > $DESKTOP_FILE \
          && echo \"Encoding=UTF-8\" >> $DESKTOP_FILE \
          && echo \"Name=${safeProjectName^}\" >> $DESKTOP_FILE \
          && echo \"Comment=${safeProjectName^}\" >> $DESKTOP_FILE \
          && echo \"Icon=`pwd`/icon.png\" >> $DESKTOP_FILE \
-         && echo \"Exec=$BIN_FILE\" >> $DESKTOP_FILE \
+         && echo \"Exec=$BIN_FILE %U\" >> $DESKTOP_FILE \
+         && echo \"Categories=$APP_CATEGORIES\" >> $DESKTOP_FILE \
+         && echo \"MimeType=$APP_MIME_TYPE\" >> $DESKTOP_FILE \
          && echo \"Terminal=false\" >> $DESKTOP_FILE \
          && echo \"Type=Application\" >> $DESKTOP_FILE \
-         && echo \"Categories=GNOME;Application;Development;\" >> $DESKTOP_FILE \
          && echo \"StartupNotify=true\" >> $DESKTOP_FILE \
          "
+
+        # Done
         showGreen "\nAdded menu entry @ $DESKTOP_FILE"
     fi
 }
