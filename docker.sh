@@ -370,7 +370,7 @@ function scriptInstall() {
          && echo \"Name=${safeProjectName^}\" >> $DESKTOP_FILE \
          && echo \"Comment=${safeProjectName^}\" >> $DESKTOP_FILE \
          && echo \"Icon=`pwd`/icon.png\" >> $DESKTOP_FILE \
-         && echo \"Exec=$BIN_FILE %U\" >> $DESKTOP_FILE \
+         && echo \"Exec=$BIN_FILE $APP_PARAM\" >> $DESKTOP_FILE \
          && echo \"Categories=$APP_CATEGORIES\" >> $DESKTOP_FILE \
          && echo \"MimeType=$APP_MIME_TYPE\" >> $DESKTOP_FILE \
          && echo \"Terminal=false\" >> $DESKTOP_FILE \
