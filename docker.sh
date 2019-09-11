@@ -144,21 +144,38 @@ function buildRuntimeVolumeDirs() {
     done
 }
 
-function getStartCommand() {
-    TMP_NAME="`echo "$PROJECT_NAME" | awk -F':' '{print $1}'`"
-    echo "$DOCKER_CMD run ${RUN_ARGS[@]} --name=\"$TMP_NAME\" \"$TMP_NAME\""
+function buildRuntimeFifo() {
+
+    # Which binaries should have fifo listeners
+    FIFO_LIST=(
+        notify-send
+        xdg-open
+        )
+
+    # Make sure the fifo dir exists
+    mkdir -p "$FIFO_PATH"
+
+    # For each pipe
+    for FIFO_NAME in ${FIFO_LIST[@]}; do
+        # If path is not a pipe
+        if [ ! -p "$FIFO_PATH/$FIFO_NAME" ]; then
+
+            # Remove existing thing if there's something
+            rm -rf "$FIFO_PATH/$FIFO_NAME"
+
+            # Create pipe
+            mkfifo "$FIFO_PATH/$FIFO_NAME"
+        fi
+    done
 }
 
 # Start the docker image
 function scriptStart() {
     showGreen "\nStarting $PROJECT_NAME..."
     buildRuntimeVolumeDirs
-    COMMAND="$(getStartCommand)"
-    if [ "$2" == "command" ]; then
-        echo "$COMMAND"
-        exit
-    fi
-    eval $COMMAND
+    buildRuntimeFifo
+    TMP_NAME="`echo "$PROJECT_NAME" | awk -F':' '{print $1}'`"
+    $DOCKER_CMD run ${RUN_ARGS[@]} -v $FIFO_PATH:/tmp/fifo --name="$TMP_NAME" "$TMP_NAME"
     exit $?
 }
 
@@ -326,12 +343,11 @@ function imageBuilt() {
 function scriptInstall() {
     showGreen "\nInstalling $PROJECT_NAME..."
     safeProjectName="`echo "$PROJECT_NAME" | awk -F':' '{print $1}' | sed -e 's/[^a-zA-Z0-9\-]/_/g'`"
-    COMMAND="$(getStartCommand)"
+    COMMAND="bash `pwd`/docker.sh start"
 
     BIN_FILE="/usr/bin/$safeProjectName"
     sudo sh -c "
         echo '#!/bin/bash' > $BIN_FILE \
-     && echo \"cd `pwd`\" >> $BIN_FILE \
      && echo \"$COMMAND\" >> $BIN_FILE \
      "
     sudo chmod +x "$BIN_FILE"
