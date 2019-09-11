@@ -176,7 +176,14 @@ function scriptStart() {
     buildRuntimeVolumeDirs
     buildRuntimeFifo
     TMP_NAME="`echo "$PROJECT_NAME" | awk -F':' '{print $1}'`"
-    $DOCKER_CMD run ${RUN_ARGS[@]} -v $FIFO_PATH:/tmp/fifo --name="$TMP_NAME" "$TMP_NAME"
+    CONTAINER_ID="`$DOCKER_CMD ps -a | grep "$TMP_NAME" | awk '{print $1}'`"
+    # If NOT running
+    if [ "$CONTAINER_ID" == "" ]; then
+        $DOCKER_CMD run ${RUN_ARGS[@]} -v $FIFO_PATH:/tmp/fifo --name="$TMP_NAME" "$TMP_NAME" ${@:3}
+    # If running
+    else
+        $DOCKER_CMD exec "$CONTAINER_ID" ${@:2}
+    fi
     exit $?
 }
 
@@ -359,7 +366,7 @@ function scriptInstall() {
     buildRuntimeVolumeDirs
 
     safeProjectName="`echo "$PROJECT_NAME" | awk -F':' '{print $1}' | sed -e 's/[^a-zA-Z0-9\-]/_/g'`"
-    COMMAND="bash `pwd`/docker.sh start"
+    COMMAND="bash `pwd`/docker.sh start $safeProjectName"
 
     BIN_FILE="/usr/bin/$safeProjectName"
     sudo sh -c "
