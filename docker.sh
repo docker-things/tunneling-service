@@ -368,6 +368,7 @@ function scriptInstall() {
             echo \"[Desktop Entry]\" > $DESKTOP_FILE \
          && echo \"Encoding=UTF-8\" >> $DESKTOP_FILE \
          && echo \"Name=${safeProjectName^}\" >> $DESKTOP_FILE \
+         && echo \"GenericName=$APP_GENERIC_NAME\" >> $DESKTOP_FILE \
          && echo \"Comment=${safeProjectName^}\" >> $DESKTOP_FILE \
          && echo \"Icon=`pwd`/icon.png\" >> $DESKTOP_FILE \
          && echo \"Exec=$BIN_FILE $APP_PARAM\" >> $DESKTOP_FILE \
