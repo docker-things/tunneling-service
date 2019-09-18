@@ -362,6 +362,7 @@ function scriptSetDefault() {
     fi
 }
 
+# Remove any data stored by the application
 function scriptClearData() {
     showGreen "\nRemoving data for $PROJECT_NAME stored at `pwd`/data..."
     rm -rf ./data
