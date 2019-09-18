@@ -50,7 +50,7 @@ function scriptRun() {
 
 # Show script usage
 function showUsage() {
-    showNormal "\nUsage: bash $0 [build|start|logs|status|connect|stop|kill|restart|backup|remove|restore]\n"
+    showNormal "\nUsage: bash $0 [build|start|logs|status|connect|stop|kill|restart|backup|remove|restore|install|clear-data|set-default]\n"
     exit 1
 }
 
@@ -363,9 +363,9 @@ function scriptSetDefault() {
 }
 
 function scriptClearData() {
-    showGreen "\nRemoving data for $PROJECT_NAME..."
+    showGreen "\nRemoving data for $PROJECT_NAME stored at `pwd`/data..."
     rm -rf ./data
-    showGreen "\nRebuilding needed dirs..."
+    showGreen "\nRebuilding runtime dirs..."
     buildRuntimeVolumeDirs
 }
 
