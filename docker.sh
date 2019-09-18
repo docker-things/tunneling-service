@@ -42,6 +42,7 @@ function scriptRun() {
         "remove")      scriptRemove $@     ;;
         "restore")     scriptRestore $@    ;;
         "install")     scriptInstall $@    ;;
+        "clear-data")  scriptClearData $@  ;;
         "set-default") scriptSetDefault $@ ;;
         *)             showUsage $@        ;;
     esac
@@ -361,6 +362,13 @@ function scriptSetDefault() {
     fi
 }
 
+function scriptClearData() {
+    showGreen "\nRemoving data for $PROJECT_NAME..."
+    rm -rf ./data
+    showGreen "\nRebuilding needed dirs..."
+    buildRuntimeVolumeDirs
+}
+
 # Make the app runnable from the host system
 function scriptInstall() {
     showGreen "\nInstalling $PROJECT_NAME..."
@@ -384,7 +392,7 @@ function scriptInstall() {
 
         # Open in terminal
         if [ "$APP_TERMINAL" == "true" ]; then
-            BIN_FILE="x-terminal-emulator -e \"$BIN_FILE;exit\""
+            BIN_FILE="x-terminal-emulator -e $BIN_FILE"
         fi
 
         # Where to add the entry
