@@ -382,6 +382,11 @@ function scriptInstall() {
         # Default app categories
         APP_CATEGORIES="${APP_CATEGORIES:=GNOME;GTK;Utility;}"
 
+        # Open in terminal
+        if [ "$APP_TERMINAL" == "true" ]; then
+            BIN_FILE="x-terminal-emulator -e \"$BIN_FILE\";exit"
+        fi
+
         # Where to add the entry
         DESKTOP_FILE="/usr/share/applications/$safeProjectName.desktop"
 
