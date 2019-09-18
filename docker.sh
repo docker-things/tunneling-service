@@ -384,7 +384,7 @@ function scriptInstall() {
 
         # Open in terminal
         if [ "$APP_TERMINAL" == "true" ]; then
-            BIN_FILE="x-terminal-emulator -e \"$BIN_FILE\";exit"
+            BIN_FILE="x-terminal-emulator -e \"$BIN_FILE;exit\""
         fi
 
         # Where to add the entry
